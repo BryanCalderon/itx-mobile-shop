@@ -1,0 +1,20 @@
+/* Two-column product detail layout, shared by the detail page and its loading skeleton:
+   the image on the left and the details and actions on the right. One column on small screens. */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (width >= 768px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}

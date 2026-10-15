@@ -1,0 +1,14 @@
+.imageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.imageWrapper img {
+  height: auto;
+  object-fit: contain;
+}

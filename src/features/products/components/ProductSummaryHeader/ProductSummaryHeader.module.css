@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.brand {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.model {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.price {
+  margin: var(--space-2) 0 0;
+  font-size: 1.25rem;
+}

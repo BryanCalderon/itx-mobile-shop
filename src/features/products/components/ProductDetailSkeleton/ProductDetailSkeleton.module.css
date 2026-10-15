@@ -1,0 +1,33 @@
+.image,
+.title,
+.block {
+  border-radius: var(--radius);
+  background: var(--color-skeleton);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.image {
+  min-height: 420px;
+}
+
+.title {
+  height: 3rem;
+}
+
+.block {
+  height: 12rem;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .title,
+  .block {
+    animation: none;
+  }
+}

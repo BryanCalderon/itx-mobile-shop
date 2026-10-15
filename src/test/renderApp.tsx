@@ -6,13 +6,20 @@ import { RouterProvider } from 'react-router/dom'
 import { createQueryClient } from '@/app/queryClient'
 import { routes } from '@/app/routes'
 
-/** Renders the whole application at the given path, with a fresh cache and no retries. */
-export function renderApp(path = '/') {
+/**
+ * Renders the whole application with a fresh cache and no retries. It accepts a single path or
+ * a browsing history, in which case the last entry is the current page.
+ */
+export function renderApp(pathOrHistory: string | string[] = '/') {
+  const history = Array.isArray(pathOrHistory) ? pathOrHistory : [pathOrHistory]
   const queryClient = createQueryClient()
   queryClient.setDefaultOptions({
     queries: { ...queryClient.getDefaultOptions().queries, retry: false },
   })
-  const router = createMemoryRouter(routes, { initialEntries: [path] })
+  const router = createMemoryRouter(routes, {
+    initialEntries: history,
+    initialIndex: history.length - 1,
+  })
 
   render(
     <QueryClientProvider client={queryClient}>
