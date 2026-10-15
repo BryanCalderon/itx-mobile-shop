@@ -1,0 +1,5 @@
+.empty {
+  padding: var(--space-8) 0;
+  color: var(--color-text-muted);
+  text-align: center;
+}

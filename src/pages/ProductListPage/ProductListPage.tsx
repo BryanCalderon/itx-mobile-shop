@@ -1,42 +1,34 @@
-import { SlowLoadingNotice } from '@/components/SlowLoadingNotice/SlowLoadingNotice'
-import { StatusMessage } from '@/components/StatusMessage/StatusMessage'
-import { ProductGrid } from '@/features/products/components/ProductGrid/ProductGrid'
-import { ProductGridSkeleton } from '@/features/products/components/ProductGridSkeleton/ProductGridSkeleton'
+import { useId } from 'react'
+import { ErrorState } from '@/components/ErrorState/ErrorState'
+import { ProductListLoading } from '@/features/products/components/ProductListLoading/ProductListLoading'
+import { ProductListToolbar } from '@/features/products/components/ProductListToolbar/ProductListToolbar'
+import { ProductSearchResults } from '@/features/products/components/ProductSearchResults/ProductSearchResults'
 import { useProducts } from '@/features/products/hooks/useProducts'
-import styles from './ProductListPage.module.css'
+import { useProductSearch } from '@/features/products/hooks/useProductSearch'
 
 export function ProductListPage() {
+  const titleId = useId()
   const { data: products, isPending, isError, refetch } = useProducts()
+  const { query, setQuery, searchedQuery, results } = useProductSearch(products)
 
   if (isError) {
     return (
-      <StatusMessage
-        title="No se han podido cargar los productos"
-        description="Comprueba tu conexión e inténtalo de nuevo."
-        action={
-          <button type="button" onClick={() => void refetch()}>
-            Reintentar
-          </button>
-        }
-      />
+      <ErrorState title="No se han podido cargar los productos" onRetry={() => void refetch()} />
     )
   }
 
   return (
-    <section aria-labelledby="product-list-title">
-      <div className={styles.toolbar}>
-        <h1 id="product-list-title" className={styles.title}>
-          Móviles
-        </h1>
-        {products && <p className={styles.count}>{products.length} productos</p>}
-      </div>
+    <section aria-labelledby={titleId}>
+      <ProductListToolbar
+        titleId={titleId}
+        productCount={isPending ? undefined : results.length}
+        query={query}
+        onQueryChange={setQuery}
+      />
       {isPending ? (
-        <>
-          <SlowLoadingNotice />
-          <ProductGridSkeleton />
-        </>
+        <ProductListLoading />
       ) : (
-        <ProductGrid products={products} />
+        <ProductSearchResults products={results} query={searchedQuery} />
       )}
     </section>
   )

@@ -57,8 +57,70 @@ describe('ProductListPage', () => {
 
     expect(within(await findProductList()).getAllByRole('listitem')).toHaveLength(3)
   })
+
+  describe('search', () => {
+    it('filters the products by brand and model while the user types', async () => {
+      const { user } = renderApp('/')
+      await findProductList()
+
+      await user.type(searchInput(), 'acer')
+      expect(await findProductNames()).toEqual(['Iconia Talk S', 'Liquid Jade 2'])
+      expect(screen.getByRole('status')).toHaveTextContent('2 productos')
+
+      await user.type(searchInput(), ' jade')
+      expect(await findProductNames()).toEqual(['Liquid Jade 2'])
+      expect(screen.getByRole('status')).toHaveTextContent('1 producto')
+    })
+
+    it('tells when no product matches the search', async () => {
+      const { user } = renderApp('/')
+      await findProductList()
+
+      await user.type(searchInput(), 'nokia')
+
+      expect(await screen.findByText('No hay productos que coincidan con «nokia».')).toBeVisible()
+      expect(screen.getByRole('status')).toHaveTextContent('0 productos')
+    })
+
+    it('keeps the search in the URL', async () => {
+      const { router, user } = renderApp('/')
+      await findProductList()
+
+      await user.type(searchInput(), 'pop')
+
+      expect(router.state.location.search).toBe('?search=pop')
+    })
+
+    it('restores the search from the URL', async () => {
+      renderApp('/?search=alcatel')
+
+      expect(await findProductNames()).toEqual(['Pop 4'])
+      expect(searchInput()).toHaveValue('alcatel')
+    })
+
+    it('shows every product again when the search is cleared', async () => {
+      const { router, user } = renderApp('/?search=alcatel')
+      await findProductList()
+
+      await user.clear(searchInput())
+
+      expect(await findProductNames()).toHaveLength(3)
+      expect(router.state.location.search).toBe('')
+    })
+  })
 })
 
 function findProductList() {
   return screen.findByRole('list', { name: 'Productos' })
+}
+
+async function findProductNames() {
+  const productList = await findProductList()
+  return within(productList)
+    .getAllByRole('heading')
+    .map((heading) => heading.textContent)
+}
+
+function searchInput() {
+  return screen.getByRole('searchbox', { name: 'Buscar por marca o modelo' })
 }
