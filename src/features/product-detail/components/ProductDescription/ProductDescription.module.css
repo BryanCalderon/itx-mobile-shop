@@ -26,3 +26,20 @@
 .spec dd {
   margin: 0;
 }
+
+/* Wider screens show the attributes in two columns, with each label above its value, so the
+   description stays compact and the purchase options are reachable without much scrolling */
+@media (width >= 768px) {
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-6);
+  }
+
+  .spec {
+    grid-template-columns: 1fr;
+    align-content: start;
+    gap: var(--space-1);
+    padding: var(--space-2) 0;
+  }
+}

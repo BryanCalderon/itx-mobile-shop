@@ -11,6 +11,12 @@
   .layout {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
+
+  /* The image stays in view while the details are scrolled */
+  .media {
+    position: sticky;
+    top: var(--sticky-top);
+  }
 }
 
 .details {

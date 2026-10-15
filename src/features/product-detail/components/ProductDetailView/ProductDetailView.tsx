@@ -22,7 +22,9 @@ export function ProductDetailView({
   return (
     <article className={layout.layout}>
       <title>{`${productName} | Mobile Shop`}</title>
-      <ProductImage src={product.imageUrl} alt={productName} />
+      <div className={layout.media}>
+        <ProductImage src={product.imageUrl} alt={productName} />
+      </div>
       <div className={layout.details}>
         <ProductSummaryHeader product={product} />
         <ProductDescription product={product} />

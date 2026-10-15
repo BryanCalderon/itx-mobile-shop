@@ -20,6 +20,8 @@
   --space-6: 1.5rem;
   --space-8: 2rem;
   --content-width: 1200px;
+  /* Distance from the top of the viewport for sticky elements, so the header does not cover them */
+  --sticky-top: 6rem;
 }
 
 *,
