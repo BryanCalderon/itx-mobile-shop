@@ -2,7 +2,7 @@
 
 Mini aplicación para comprar dispositivos móviles, desarrollada como SPA con React y TypeScript.
 
-**Demo:** https://candid-caramel-69aec8.netlify.app
+**Demo:** https://bryan-itx-mobile-shop.netlify.app
 
 > El API se aloja en un servidor que se suspende sin tráfico, así que la primera carga puede tardar
 > hasta un minuto.
