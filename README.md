@@ -41,6 +41,21 @@ VITE_API_BASE_URL=http://localhost:3000/api
 - **Vitest + Testing Library + MSW** para los tests
 - **ESLint + Prettier** para la calidad del código
 
+## Notas sobre el API
+
+Durante el desarrollo se detectaron algunas particularidades del API, que la aplicación resuelve así:
+
+- **El servidor se suspende cuando no recibe tráfico** y la primera petición puede tardar hasta un
+  minuto. Se muestra un esqueleto de carga y, si la espera se alarga, un aviso explicándolo.
+- **Añadir a la cesta siempre devuelve `count: 1`**: son las unidades añadidas, no el total de la
+  cesta. Por eso el contador se acumula en el cliente y se persiste en `localStorage`, sincronizado
+  entre pestañas.
+- **Los datos del producto se normalizan** en un mapper: el precio llega como texto (vacío en
+  algunos productos), `displayResolution` y `displaySize` vienen intercambiados, hay campos con
+  erratas (`dimentions`, `secondaryCmera`) y valores que unas veces son texto y otras listas.
+- **Un producto inexistente devuelve un error 500**, no un 404, así que se trata como un error de
+  carga con opción de reintentar.
+
 ## Estructura
 
 El código se organiza en capas, inspiradas en
@@ -48,14 +63,15 @@ El código se organiza en capas, inspiradas en
 
 ```
 src/
-├── app/                     Arranque de la aplicación: rutas, caché y proveedores
+├── app/                     Arranque de la aplicación: rutas, caché, proveedores y layout
 ├── pages/                   Vistas de cada ruta, que componen las funcionalidades
 ├── features/
 │   ├── product-list/        Listado de productos y buscador
 │   └── product-detail/      Detalle de producto y selección de opciones
 ├── entities/
-│   └── product/             Dominio del producto: tipos, API, mappers y consultas
-├── components/              Componentes compartidos (cabecera, layout, mensajes de estado...)
+│   ├── product/             Dominio del producto: tipos, API, mappers y consultas
+│   └── cart/                Cesta: API, contador persistido y su indicador
+├── components/              Componentes compartidos (migas, mensajes de estado, enlaces...)
 ├── api/                     Cliente HTTP, configuración y endpoints del API
 ├── shared/                  Utilidades genéricas y definición de rutas
 └── test/                    Configuración y utilidades de los tests

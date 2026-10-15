@@ -16,6 +16,10 @@
   padding: var(--space-4);
 }
 
+.cart {
+  margin-left: auto;
+}
+
 .logo {
   font-size: 1.125rem;
   font-weight: 700;

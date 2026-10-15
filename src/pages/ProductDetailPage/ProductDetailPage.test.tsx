@@ -1,6 +1,10 @@
-import { screen, waitFor, within } from '@testing-library/react'
+import { cleanup, screen, waitFor, within } from '@testing-library/react'
+import { http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
+import { API_BASE_URL } from '@/api/apiConfig'
+import { API_ENDPOINTS } from '@/api/endpoints'
 import { renderApp } from '@/test/renderApp'
+import { server } from '@/test/server'
 
 describe('ProductDetailPage', () => {
   it('shows a loading state while the product is fetched', () => {
@@ -110,4 +114,94 @@ describe('ProductDetailPage', () => {
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Iconia Talk S' })).toBeVisible()
   })
+
+  describe('add to cart', () => {
+    it('is not possible until every option is selected', async () => {
+      const { user } = renderApp('/product/acer-1')
+
+      const addButton = await screen.findByRole('button', { name: 'Añadir a la cesta' })
+      expect(addButton).toBeDisabled()
+      expect(addButton).toHaveAccessibleDescription('Selecciona el almacenamiento y el color.')
+
+      await user.click(screen.getByRole('radio', { name: '32 GB' }))
+
+      expect(addButton).toBeEnabled()
+    })
+
+    it('sends the product with the selected options and updates the cart count', async () => {
+      let requestBody: unknown
+      server.use(
+        http.post(`${API_BASE_URL}${API_ENDPOINTS.cart}`, async ({ request }) => {
+          requestBody = await request.json()
+          return HttpResponse.json({ count: 1 })
+        }),
+      )
+      const { user } = renderApp('/product/acer-1')
+      expect(cartCount()).toHaveTextContent('Cesta: 0 productos')
+
+      await user.click(await screen.findByRole('radio', { name: '32 GB' }))
+      await user.click(screen.getByRole('button', { name: 'Añadir a la cesta' }))
+
+      expect(await screen.findByText('Producto añadido a la cesta.')).toBeVisible()
+      expect(requestBody).toEqual({ id: 'acer-1', colorCode: 1000, storageCode: 2001 })
+      expect(cartCount()).toHaveTextContent('Cesta: 1 producto')
+    })
+
+    it('accumulates the products added', async () => {
+      const { user } = renderApp('/product/acer-1')
+      await user.click(await screen.findByRole('radio', { name: '16 GB' }))
+
+      await user.click(screen.getByRole('button', { name: 'Añadir a la cesta' }))
+      await screen.findByText('Producto añadido a la cesta.')
+      await user.click(screen.getByRole('button', { name: 'Añadir a la cesta' }))
+
+      await waitFor(() => expect(cartCount()).toHaveTextContent('Cesta: 2 productos'))
+    })
+
+    it('keeps the cart count across pages and reloads', async () => {
+      const { user } = renderApp('/product/acer-1')
+      await user.click(await screen.findByRole('radio', { name: '16 GB' }))
+      await user.click(screen.getByRole('button', { name: 'Añadir a la cesta' }))
+      await screen.findByText('Producto añadido a la cesta.')
+
+      await user.click(screen.getByRole('link', { name: /Volver al listado/ }))
+      expect(cartCount()).toHaveTextContent('Cesta: 1 producto')
+
+      cleanup()
+      renderApp('/')
+      expect(cartCount()).toHaveTextContent('Cesta: 1 producto')
+    })
+
+    it('lets the user close the confirmation', async () => {
+      const { user } = renderApp('/product/acer-1')
+      await user.click(await screen.findByRole('radio', { name: '16 GB' }))
+      await user.click(screen.getByRole('button', { name: 'Añadir a la cesta' }))
+      await screen.findByText('Producto añadido a la cesta.')
+
+      await user.click(screen.getByRole('button', { name: 'Cerrar notificación' }))
+
+      expect(screen.queryByText('Producto añadido a la cesta.')).not.toBeInTheDocument()
+    })
+
+    it('tells the user when the product cannot be added', async () => {
+      server.use(
+        http.post(`${API_BASE_URL}${API_ENDPOINTS.cart}`, () =>
+          HttpResponse.json({ message: 'Invalid parameters' }, { status: 400 }),
+        ),
+      )
+      const { user } = renderApp('/product/acer-1')
+      await user.click(await screen.findByRole('radio', { name: '16 GB' }))
+
+      await user.click(screen.getByRole('button', { name: 'Añadir a la cesta' }))
+
+      expect(await screen.findByRole('alert')).toHaveTextContent(
+        'No se ha podido añadir el producto. Inténtalo de nuevo.',
+      )
+      expect(cartCount()).toHaveTextContent('Cesta: 0 productos')
+    })
+  })
 })
+
+function cartCount() {
+  return screen.getByText(/^Cesta:/)
+}

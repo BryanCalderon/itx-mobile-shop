@@ -1,0 +1,17 @@
+.area {
+  position: absolute;
+  top: calc(100% + var(--space-4));
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-end;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+  /* Clicks go through the empty area to the page below */
+  pointer-events: none;
+}
+
+.area > * {
+  pointer-events: auto;
+}

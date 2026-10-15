@@ -1,6 +1,8 @@
 import { Link } from 'react-router'
+import { Breadcrumbs } from '@/components/Breadcrumbs/Breadcrumbs'
+import { NotificationArea } from '@/components/NotificationArea/NotificationArea'
+import { CartCount } from '@/entities/cart/components/CartCount/CartCount'
 import { PATHS } from '@/shared/routing/paths'
-import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs'
 import styles from './Header.module.css'
 
 export function Header() {
@@ -11,7 +13,11 @@ export function Header() {
           Mobile Shop
         </Link>
         <Breadcrumbs />
+        <div className={styles.cart}>
+          <CartCount />
+        </div>
       </div>
+      <NotificationArea />
     </header>
   )
 }

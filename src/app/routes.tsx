@@ -1,5 +1,4 @@
 import type { RouteObject } from 'react-router'
-import { Layout } from '@/components/Layout/Layout'
 import { ProductBreadcrumb } from '@/features/product-detail/components/ProductBreadcrumb/ProductBreadcrumb'
 import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage'
 import { ProductDetailPage } from '@/pages/ProductDetailPage/ProductDetailPage'
@@ -7,6 +6,7 @@ import { ProductListPage } from '@/pages/ProductListPage/ProductListPage'
 import { RouteErrorPage } from '@/pages/RouteErrorPage/RouteErrorPage'
 import { PATHS } from '@/shared/routing/paths'
 import type { RouteHandle } from '@/shared/routing/routeHandle'
+import { Layout } from './layout/Layout/Layout'
 
 export const routes: RouteObject[] = [
   {

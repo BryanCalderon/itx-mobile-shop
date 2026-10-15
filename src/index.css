@@ -8,6 +8,8 @@
   --color-accent-contrast: #ffffff;
   --color-skeleton: #ececea;
   --color-focus: #2f6fed;
+  --color-success: #1d7a3a;
+  --color-error: #b3261e;
 
   --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --radius: 4px;
