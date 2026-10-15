@@ -8,11 +8,11 @@ import { useLocation } from 'react-router'
  */
 export function useFocusOnPageChange(elementRef: RefObject<HTMLElement | null>) {
   const { pathname } = useLocation()
-  const isFirstPage = useRef(true)
+  const isFirstPageRef = useRef(true)
 
   useEffect(() => {
-    if (isFirstPage.current) {
-      isFirstPage.current = false
+    if (isFirstPageRef.current) {
+      isFirstPageRef.current = false
       return
     }
     // The scroll position is managed by the router, so focusing must not change it

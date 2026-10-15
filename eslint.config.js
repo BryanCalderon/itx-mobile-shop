@@ -1,14 +1,15 @@
 import js from '@eslint/js'
+import eslintReact from '@eslint-react/eslint-plugin'
 import pluginQuery from '@tanstack/eslint-plugin-query'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import prettier from 'eslint-config-prettier'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
-import react from 'eslint-plugin-react'
+import jsxA11y from 'eslint-plugin-jsx-a11y-x'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
+import { oneComponentPerFile } from './eslint/rules/oneComponentPerFile.js'
 
 /**
  * Layers, from top to bottom: app, pages, features, entities and the shared code (shared,
@@ -55,7 +56,8 @@ export default defineConfig(
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
-      jsxA11y.flatConfigs.recommended,
+      eslintReact.configs['recommended-type-checked'],
+      jsxA11y.configs.recommended,
       pluginQuery.configs['flat/recommended'],
       prettier,
     ],
@@ -63,16 +65,18 @@ export default defineConfig(
       ecmaVersion: 2023,
       globals: globals.browser,
       parserOptions: {
-        projectService: { allowDefaultProject: ['eslint.config.js'] },
+        projectService: { allowDefaultProject: ['eslint.config.js', 'eslint/rules/*.js'] },
         tsconfigRootDir: import.meta.dirname,
       },
     },
-    plugins: { react, 'simple-import-sort': simpleImportSort },
-    settings: { react: { version: 'detect' } },
+    plugins: {
+      local: { rules: { 'one-component-per-file': oneComponentPerFile } },
+      'simple-import-sort': simpleImportSort,
+    },
     rules: {
       '@typescript-eslint/no-deprecated': 'error',
       // One component per file
-      'react/no-multi-comp': 'error',
+      'local/one-component-per-file': 'error',
       // Imports in a single block without blank lines: side effects, packages, @/ alias and relative
       'simple-import-sort/imports': ['error', { groups: [['^\\u0000', '^@?\\w', '^@/', '^\\.']] }],
       'simple-import-sort/exports': 'error',

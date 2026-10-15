@@ -11,7 +11,7 @@ interface OptionSelectorProps {
 
 /** Group of mutually exclusive options, built on native radio buttons for keyboard and screen reader support. */
 export function OptionSelector({ legend, options, selectedCode, onChange }: OptionSelectorProps) {
-  const name = useId()
+  const groupId = useId()
 
   return (
     <fieldset className={styles.selector}>
@@ -21,7 +21,7 @@ export function OptionSelector({ legend, options, selectedCode, onChange }: Opti
           <label key={option.code} className={styles.option}>
             <input
               type="radio"
-              name={name}
+              name={groupId}
               value={option.code}
               checked={option.code === selectedCode}
               onChange={() => onChange(option.code)}

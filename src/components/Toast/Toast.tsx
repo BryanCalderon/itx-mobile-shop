@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
+import { use, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { NOTIFICATION_AREA_ID } from '../NotificationArea/constants'
+import { NotificationAreaContext } from '../NotificationArea/NotificationAreaContext'
 import { TOAST_AUTO_DISMISS_MS } from './constants'
 import styles from './Toast.module.css'
 import type { ToastNotification } from './types'
@@ -17,6 +17,7 @@ interface ToastProps {
  */
 export function Toast({ notification, onDismiss }: ToastProps) {
   const variant = notification?.variant
+  const notificationArea = use(NotificationAreaContext)?.element
 
   useEffect(() => {
     if (variant !== 'success') {
@@ -49,6 +50,5 @@ export function Toast({ notification, onDismiss }: ToastProps) {
     </div>
   )
   // Rendered in place when there is no notification area, e.g. when the component is used alone
-  const notificationArea = document.getElementById(NOTIFICATION_AREA_ID)
   return notificationArea ? createPortal(toast, notificationArea) : toast
 }
