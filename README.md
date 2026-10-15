@@ -24,6 +24,15 @@ npm start        # modo desarrollo en http://localhost:5173
 | `npm run preview` | Sirve localmente la compilación de producción |
 | `npm run format`  | Formatea el código con Prettier               |
 
+## Configuración
+
+La URL del API se define en el archivo [`.env`](.env) con la variable `VITE_API_BASE_URL`. Para
+usar otra en local, sin modificar el archivo versionado, se puede crear un `.env.local`:
+
+```bash
+VITE_API_BASE_URL=http://localhost:3000/api
+```
+
 ## Stack
 
 - **React 19 + TypeScript**, empaquetado con **Vite**
