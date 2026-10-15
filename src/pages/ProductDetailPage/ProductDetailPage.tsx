@@ -1,10 +1,10 @@
 import { useParams } from 'react-router'
-import { PATHS } from '@/app/paths'
 import { BackLink } from '@/components/BackLink/BackLink'
 import { ErrorState } from '@/components/ErrorState/ErrorState'
-import { ProductDetailLoading } from '@/features/products/components/ProductDetailLoading/ProductDetailLoading'
-import { ProductDetailView } from '@/features/products/components/ProductDetailView/ProductDetailView'
-import { useProduct } from '@/features/products/hooks/useProduct'
+import { useProduct } from '@/entities/product/hooks/useProduct'
+import { ProductDetailLoading } from '@/features/product-detail/components/ProductDetailLoading/ProductDetailLoading'
+import { ProductDetailView } from '@/features/product-detail/components/ProductDetailView/ProductDetailView'
+import { PATHS } from '@/shared/routing/paths'
 
 export function ProductDetailPage() {
   const { id = '' } = useParams()

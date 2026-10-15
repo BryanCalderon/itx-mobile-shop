@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { expect, it } from 'vitest'
-import { useProducts } from '@/features/products/hooks/useProducts'
+import { useProducts } from '@/entities/product/hooks/useProducts'
 import { AppProviders } from './AppProviders'
 import { QUERY_CACHE_STORAGE_KEY } from './constants'
 

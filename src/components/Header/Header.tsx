@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { PATHS } from '@/app/paths'
+import { PATHS } from '@/shared/routing/paths'
 import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs'
 import styles from './Header.module.css'
 

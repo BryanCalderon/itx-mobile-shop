@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
-import { PATHS } from '@/app/paths'
 import { StatusMessage } from '@/components/StatusMessage/StatusMessage'
+import { PATHS } from '@/shared/routing/paths'
 
 export function NotFoundPage() {
   return (

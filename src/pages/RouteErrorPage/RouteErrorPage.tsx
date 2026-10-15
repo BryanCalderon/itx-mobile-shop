@@ -1,5 +1,5 @@
-import { PATHS } from '@/app/paths'
 import { StatusMessage } from '@/components/StatusMessage/StatusMessage'
+import { PATHS } from '@/shared/routing/paths'
 
 /** Last resort when rendering fails: a plain page outside the layout, with a full reload link. */
 export function RouteErrorPage() {

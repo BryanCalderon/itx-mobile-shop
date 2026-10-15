@@ -1,5 +1,5 @@
 import { Link, useMatches } from 'react-router'
-import type { RouteHandle } from '@/app/routeHandle'
+import type { RouteHandle } from '@/shared/routing/routeHandle'
 import styles from './Breadcrumbs.module.css'
 
 export function Breadcrumbs() {

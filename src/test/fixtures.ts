@@ -1,4 +1,4 @@
-import type { ProductDetailDto, ProductSummaryDto } from '@/features/products/api/productDto'
+import type { ProductDetailDto, ProductSummaryDto } from '@/entities/product/api/productDto'
 
 export const productSummaryDtos: ProductSummaryDto[] = [
   {

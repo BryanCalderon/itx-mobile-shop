@@ -1,10 +1,10 @@
 import { useId } from 'react'
 import { ErrorState } from '@/components/ErrorState/ErrorState'
-import { ProductListLoading } from '@/features/products/components/ProductListLoading/ProductListLoading'
-import { ProductListToolbar } from '@/features/products/components/ProductListToolbar/ProductListToolbar'
-import { ProductSearchResults } from '@/features/products/components/ProductSearchResults/ProductSearchResults'
-import { useProducts } from '@/features/products/hooks/useProducts'
-import { useProductSearch } from '@/features/products/hooks/useProductSearch'
+import { useProducts } from '@/entities/product/hooks/useProducts'
+import { ProductListLoading } from '@/features/product-list/components/ProductListLoading/ProductListLoading'
+import { ProductListToolbar } from '@/features/product-list/components/ProductListToolbar/ProductListToolbar'
+import { ProductSearchResults } from '@/features/product-list/components/ProductSearchResults/ProductSearchResults'
+import { useProductSearch } from '@/features/product-list/hooks/useProductSearch'
 
 export function ProductListPage() {
   const titleId = useId()

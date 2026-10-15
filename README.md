@@ -43,23 +43,34 @@ VITE_API_BASE_URL=http://localhost:3000/api
 
 ## Estructura
 
+El código se organiza en capas, inspiradas en
+[Feature-Sliced Design](https://feature-sliced.design/):
+
 ```
 src/
-├── api/         Cliente HTTP, configuración y endpoints del API
-├── app/         Configuración de la aplicación: rutas, caché y proveedores
-├── components/  Componentes compartidos (cabecera, layout, mensajes de estado...)
-├── features/    Funcionalidades de negocio, cada una con su API, hooks, componentes y tipos
-├── pages/       Vistas asociadas a cada ruta
-├── shared/      Utilidades genéricas
-└── test/        Configuración y utilidades de los tests
+├── app/                     Arranque de la aplicación: rutas, caché y proveedores
+├── pages/                   Vistas de cada ruta, que componen las funcionalidades
+├── features/
+│   ├── product-list/        Listado de productos y buscador
+│   └── product-detail/      Detalle de producto y selección de opciones
+├── entities/
+│   └── product/             Dominio del producto: tipos, API, mappers y consultas
+├── components/              Componentes compartidos (cabecera, layout, mensajes de estado...)
+├── api/                     Cliente HTTP, configuración y endpoints del API
+├── shared/                  Utilidades genéricas y definición de rutas
+└── test/                    Configuración y utilidades de los tests
 ```
+
+Cada capa solo importa de las que están por debajo (`app` → `pages` → `features` → `entities` →
+`components`, `api` y `shared`), y **una funcionalidad no importa de otra**: son las páginas las que
+las combinan. Así cada funcionalidad se puede entender, modificar y probar de forma aislada.
 
 ### Convenciones
 
 - **Un componente o hook por archivo.** Cada componente vive en su carpeta junto a sus estilos
   (CSS Modules) y sus tests.
 - **Constantes en un `constants.ts`** dentro del módulo al que pertenecen.
-- **Rutas y endpoints centralizados** en `app/paths.ts` y `api/endpoints.ts`.
+- **Rutas y endpoints centralizados** en `shared/routing/paths.ts` y `api/endpoints.ts`.
 - **Imports:** relativos dentro de un mismo módulo y con el alias `@/` entre módulos distintos,
   en un único bloque sin líneas en blanco y ordenados (efectos secundarios, paquetes, alias y
   relativos). No se usan archivos barril (`index.ts`) para no perjudicar el tree-shaking ni crear
@@ -67,8 +78,8 @@ src/
 - **Los datos del API se normalizan** en un mapper antes de llegar a la aplicación, que trabaja
   siempre con tipos propios.
 
-Las reglas que se pueden automatizar las comprueba ESLint: un componente por archivo, orden de los
-imports, imports entre módulos con el alias y uso de APIs deprecadas.
+Las reglas que se pueden automatizar las comprueba ESLint: dependencias entre capas, un componente
+por archivo, orden de los imports, imports entre módulos con el alias y uso de APIs deprecadas.
 
 ## Hitos
 
