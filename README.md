@@ -2,6 +2,11 @@
 
 Mini aplicación para comprar dispositivos móviles, desarrollada como SPA con React y TypeScript.
 
+**Demo:** https://candid-caramel-69aec8.netlify.app
+
+> El API se aloja en un servidor que se suspende sin tráfico, así que la primera carga puede tardar
+> hasta un minuto.
+
 - **Listado de productos** con buscador en tiempo real por marca y modelo, adaptado a cualquier
   resolución con un máximo de cuatro productos por fila.
 - **Detalle de producto** con imagen, características y selección de almacenamiento y color.
