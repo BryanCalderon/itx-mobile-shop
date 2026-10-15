@@ -41,6 +41,35 @@ VITE_API_BASE_URL=http://localhost:3000/api
 - **Vitest + Testing Library + MSW** para los tests
 - **ESLint + Prettier** para la calidad del código
 
+## Estructura
+
+```
+src/
+├── api/         Cliente HTTP, configuración y endpoints del API
+├── app/         Configuración de la aplicación: rutas, caché y proveedores
+├── components/  Componentes compartidos (cabecera, layout, mensajes de estado...)
+├── features/    Funcionalidades de negocio, cada una con su API, hooks, componentes y tipos
+├── pages/       Vistas asociadas a cada ruta
+├── shared/      Utilidades genéricas
+└── test/        Configuración y utilidades de los tests
+```
+
+### Convenciones
+
+- **Un componente o hook por archivo.** Cada componente vive en su carpeta junto a sus estilos
+  (CSS Modules) y sus tests.
+- **Constantes en un `constants.ts`** dentro del módulo al que pertenecen.
+- **Rutas y endpoints centralizados** en `app/paths.ts` y `api/endpoints.ts`.
+- **Imports:** relativos dentro de un mismo módulo y con el alias `@/` entre módulos distintos,
+  en un único bloque sin líneas en blanco y ordenados (efectos secundarios, paquetes, alias y
+  relativos). No se usan archivos barril (`index.ts`) para no perjudicar el tree-shaking ni crear
+  dependencias circulares.
+- **Los datos del API se normalizan** en un mapper antes de llegar a la aplicación, que trabaja
+  siempre con tipos propios.
+
+Las reglas que se pueden automatizar las comprueba ESLint: un componente por archivo, orden de los
+imports, imports entre módulos con el alias y uso de APIs deprecadas.
+
 ## Hitos
 
 1. Estructura del proyecto, herramientas y README

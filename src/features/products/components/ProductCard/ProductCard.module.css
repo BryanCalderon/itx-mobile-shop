@@ -1,0 +1,56 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  text-decoration: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.card:hover {
+  border-color: var(--color-text);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.06);
+}
+
+.imageWrapper {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4) var(--space-4);
+}
+
+.imageWrapper img {
+  width: auto;
+  height: 180px;
+  object-fit: contain;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.brand {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.model {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.price {
+  margin: var(--space-2) 0 0;
+  font-size: 0.9375rem;
+}

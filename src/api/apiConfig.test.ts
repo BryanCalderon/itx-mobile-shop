@@ -6,7 +6,7 @@ afterEach(() => {
 })
 
 it('reads the API base url from the environment', async () => {
-  const { API_BASE_URL } = await import('./httpClient')
+  const { API_BASE_URL } = await import('./apiConfig')
 
   expect(API_BASE_URL).toBe(import.meta.env.VITE_API_BASE_URL)
 })
@@ -14,5 +14,5 @@ it('reads the API base url from the environment', async () => {
 it('fails fast when the API base url is not configured', async () => {
   vi.stubEnv('VITE_API_BASE_URL', '')
 
-  await expect(import('./httpClient')).rejects.toThrow('VITE_API_BASE_URL is not defined')
+  await expect(import('./apiConfig')).rejects.toThrow('VITE_API_BASE_URL is not defined')
 })

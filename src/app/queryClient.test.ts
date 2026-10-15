@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-
-import { ApiError } from '../api/httpClient'
-import { CACHE_TIME_MS, createQueryClient } from './queryClient'
+import { ApiError } from '@/api/ApiError'
+import { CACHE_TIME_MS } from './constants'
+import { createQueryClient } from './queryClient'
 
 describe('createQueryClient', () => {
   const defaults = createQueryClient().getDefaultOptions().queries!

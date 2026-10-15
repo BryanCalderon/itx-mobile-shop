@@ -1,0 +1,27 @@
+.grid {
+  --gap: var(--space-6);
+  --min-column-width: 160px;
+  --max-columns: 4;
+
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(
+      max(
+        var(--min-column-width),
+        calc((100% - (var(--max-columns) - 1) * var(--gap)) / var(--max-columns))
+      ),
+      1fr
+    )
+  );
+  gap: var(--gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (width < 600px) {
+  .grid {
+    --gap: var(--space-3);
+  }
+}

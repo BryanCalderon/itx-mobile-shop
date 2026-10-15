@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
-
-import { ApiError } from '../../../api/httpClient'
+import { ApiError } from '@/api/ApiError'
 import { fetchProduct, fetchProducts } from './productApi'
 
 describe('productApi', () => {

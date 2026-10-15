@@ -1,3 +1,9 @@
+import { createBrowserRouter } from 'react-router'
+import { RouterProvider } from 'react-router/dom'
+import { routes } from './app/routes'
+
+const router = createBrowserRouter(routes)
+
 export default function App() {
-  return <h1>Mobile Shop</h1>
+  return <RouterProvider router={router} />
 }

@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
-
-import { productDetailDto } from '../../../test/fixtures'
+import { productDetailDto } from '@/test/fixtures'
 import { toProductDetail, toProductSummary } from './productMappers'
 
 describe('toProductSummary', () => {

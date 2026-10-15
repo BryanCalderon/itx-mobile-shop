@@ -1,9 +1,12 @@
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { useState, type ReactNode } from 'react'
-
+import { type ReactNode, useState } from 'react'
 import { createPersistOptions, createQueryClient } from './queryClient'
 
-export function AppProviders({ children }: { children: ReactNode }) {
+interface AppProvidersProps {
+  children: ReactNode
+}
+
+export function AppProviders({ children }: AppProvidersProps) {
   const [queryClient] = useState(createQueryClient)
   const [persistOptions] = useState(() => createPersistOptions(window.localStorage))
 
